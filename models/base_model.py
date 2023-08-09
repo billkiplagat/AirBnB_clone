@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from uuid import uuid4
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -13,10 +14,10 @@ class BaseModel:
         """
         date_format = '%Y-%m-%dT%H:%M:%S.%f'
         if not kwargs:
-            "Using *args"
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            models.storage.new(self)
         else:
             for key, value in kwargs.items():
                 if key in ("updated_at", "created_at"):
@@ -37,22 +38,16 @@ class BaseModel:
         Updates the public instance attribute:
         updated_at - with the current datetime
         """
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """
-        Method returns a dictionary containing all
+        This Method returns a dictionary containing all
         keys/values of __dict__ instance
         """
-        objects = {}
-        for key, values in self.__dict__.items():
-            if key == "created_at" or key == "updated_at":
-                """
-                isoformat() used to represent a datetime object 
-                in a string format following the ISO 8601 standard
-                """
-                objects[key] = values.isoformat()
-            else:
-                objects[key] = values
+        objects = self.__dict__.copy()
+        objects["created_at"] = self.created_at.isoformat()
+        objects["updated_at"] = self.updated_at.isoformat()
         objects["__class__"] = self.__class__.__name__
         return objects
