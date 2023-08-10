@@ -22,9 +22,9 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key in ("updated_at", "created_at"):
                     self.__dict__[key] = datetime.strptime(value, date_format)
-                elif key[0] == "id":
+                elif key == "id":
                     self.__dict__[key] = str(value)
-                else:
+                elif key != "__class__":
                     self.__dict__[key] = value
 
     def __str__(self):

@@ -20,7 +20,7 @@ class FileStorage:
         Args:
         object(obj): object to write
         """
-        self.__objects[obj.__class__.__name__ + '.' + str(obj)] = obj
+        self.__objects[obj.__class__.__name__ + '.' + str(obj.id)] = obj # we should use obj.id not str(obj) only
 
     def save(self):
         """
