@@ -50,5 +50,4 @@ class BaseModel:
         objects["created_at"] = self.created_at.isoformat()
         objects["updated_at"] = self.updated_at.isoformat()
         objects["__class__"] = self.__class__.__name__
-
         return objects
