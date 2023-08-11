@@ -4,8 +4,13 @@ Module file_storage serializes and
 deserializes JSON types
 """
 import json
-from models.base_model import BaseModel
 from models.user import User
+from models.base_model import BaseModel
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
@@ -31,8 +36,8 @@ class FileStorage:
             obj_dict[key] = obj.to_dict()
 
         with open(self.__file_path, "w", encoding="UTF-8") as f:
-            json.dump(obj_dict, f, indent=4)
-            f.write("\n")
+            json.dump(obj_dict, f)
+            # f.write("\n")
 
     def reload(self):
         """
@@ -40,7 +45,13 @@ class FileStorage:
         file exists, otherwise nothing happens
         """
         class_map = {
-            "BaseModel": BaseModel
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
         }
         try:
             with open(self.__file_path, 'r') as f:
