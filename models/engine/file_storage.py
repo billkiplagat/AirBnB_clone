@@ -16,7 +16,9 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """Sets new objects to existing dictionary of instances saved in __objects"""
+        """creates a new object and saves it to __objects"""
+        # key = "{}.{}".format(type(obj).__name__, obj.id)
+        # self.__objects[key] = obj
         self.__objects[obj.__class__.__name__ + '.' + str(obj.id)] = obj  # we should use obj.id not str(obj) only
 
     def save(self):
@@ -29,7 +31,8 @@ class FileStorage:
             obj_dict[key] = obj.to_dict()
 
         with open(self.__file_path, "w", encoding="UTF-8") as f:
-            json.dump(obj_dict, f)
+            json.dump(obj_dict, f, indent=4)
+            f.write("\n")
 
     def reload(self):
         """
