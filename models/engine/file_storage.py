@@ -22,9 +22,7 @@ class FileStorage:
 
     def new(self, obj):
         """creates a new object and saves it to __objects"""
-        # key = "{}.{}".format(type(obj).__name__, obj.id)
-        # self.__objects[key] = obj
-        self.__objects[obj.__class__.__name__ + '.' + str(obj.id)] = obj  # we should use obj.id not str(obj) only
+        self.__objects[obj.__class__.__name__ + '.' + str(obj.id)] = obj
 
     def save(self):
         """

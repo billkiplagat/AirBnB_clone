@@ -35,7 +35,7 @@ class HBNBCommand(cmd.Cmd):
         """exit the program"""
         return True
 
-    def empty_line(self):
+    def emptyline(self):
         """overrides default empty line method"""
         pass
 
