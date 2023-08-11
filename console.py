@@ -6,20 +6,19 @@ from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
 
-
 class HBNBCommand(cmd.Cmd):
     """definition of class represinting interpreter"""
-    
+
     prompt = "(hbnb) "
 
     def do_quit(self, line):
         """exit the program"""
         return True
-    
+
     def do_EOF(self, line):
         """exit the program"""
         return True
-    
+
     def emptyline(self):
         """overrides default emptyline method"""
         pass
@@ -134,6 +133,7 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
                 except KeyError:
                     print("** no instance found **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
