@@ -7,7 +7,7 @@ from models.engine.file_storage import FileStorage
 
 
 class HBNBCommand(cmd.Cmd):
-    """definition of class represinting interpreter"""
+    """definition of class representing interpreter"""
 
     prompt = "(hbnb) "
 
@@ -19,8 +19,8 @@ class HBNBCommand(cmd.Cmd):
         """exit the program"""
         return True
 
-    def emptyline(self):
-        """overrides default emptyline method"""
+    def empty_line(self):
+        """overrides default empty line method"""
         pass
 
     def do_help(self, line):

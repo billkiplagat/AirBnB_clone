@@ -5,6 +5,7 @@ deserializes JSON types
 """
 import json
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -15,16 +16,12 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """sets in __objects the object with the key
-        <obj class name>.id
-        Args:
-        object(obj): object to write
-        """
+        """Sets new objects to existing dictionary of instances saved in __objects"""
         self.__objects[obj.__class__.__name__ + '.' + str(obj.id)] = obj  # we should use obj.id not str(obj) only
 
     def save(self):
         """
-        serializes __objects to the JSON file
+        save/serializes obj dictionaries to the JSON file
         (path: __file_path)
         """
         obj_dict = {}
