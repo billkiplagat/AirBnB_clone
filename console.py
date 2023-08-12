@@ -45,6 +45,10 @@ class HBNBCommand(cmd.Cmd):
             elif l[0] in self.class_map and l[1].split('("')[0] == "destroy":
                 id = l[1][8:-1]
                 return "destroy_id " + id
+            elif l[0] in self.class_map and l[1].split('("')[0] == "update":
+                args = l[1][7:-1].split(",")
+                """print("update " + l[0] + " " + " ".join(args)"""
+                return "update " + l[0] + " " + " ".join(args)
         else:
             return line
 
@@ -150,7 +154,8 @@ class HBNBCommand(cmd.Cmd):
             else:
                 try:
                     objs_dict = storage.all()
-                    instance = objs_dict[".".join(args[:2])]
+                    id = ".".join([args[0].strip('"'), args[1].strip('"')])
+                    instance = objs_dict[id]
                     attr_name = (args[2]).strip('"')
                     attr_value = args[3].strip('"')
                     if hasattr(instance, attr_name):
