@@ -152,5 +152,13 @@ class HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
 
 
+# if __name__ == '__main__':
+#     HBNBCommand().cmdloop()
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    mycmd = HBNBCommand()
+
+    if not sys.stdin.isatty():
+        for line in sys.stdin:
+            mycmd.onecmd(line.strip())
+    else:
+        mycmd.cmdloop()
