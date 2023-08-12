@@ -152,11 +152,14 @@ class HBNBCommand(cmd.Cmd):
                 except KeyError:
                     print("** no instance found **")
 
-if __name__ == '__main__':
-    if not sys.stdin.isatty():
-        for line in sys.stdin:
-            print(HBNBCommand().prompt)
-            HBNBCommand().onecmd(line.strip())
-            print(HBNBCommand().prompt)
-    else:
-        HBNBCommand().cmdloop()
+
+# if __name__ == '__main__':
+#     if not sys.stdin.isatty():
+#         for line in sys.stdin:
+#             print(HBNBCommand().prompt)
+#             HBNBCommand().onecmd(line.strip())
+#             print(HBNBCommand().prompt)
+#     else:
+#         HBNBCommand().cmdloop()
+if __name__ == "__main__":
+    HBNBCommand().cmdloop()
