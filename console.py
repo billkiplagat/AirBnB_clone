@@ -155,8 +155,4 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == "__main__":
-    if not sys.stdin.isatty():
-        HBNBCommand().cmdloop()
-        print()
-    else:
-        HBNBCommand().cmdloop()
+    HBNBCommand().cmdloop()
