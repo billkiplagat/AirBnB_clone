@@ -41,7 +41,7 @@ class HBNBCommand(cmd.Cmd):
                 return "count " + l[0]
             elif l[0] in self.class_map and l[1].split('("')[0] == "show":
                 id = l[1][5:-1]
-                return "showid " + id
+                return "show_id " + id
             elif l[0] in self.class_map and l[1].split('("')[0] == "destroy":
                 id = l[1][8:-1]
                 return "destroy_id " + id
@@ -180,12 +180,16 @@ class HBNBCommand(cmd.Cmd):
                 count += 1
         print(count)
 
-    def do_showid(self, line):
+    def do_show_id(self, line):
         """retrieve an instance based on its ID: <class name>.show(<id>)"""
         objs_dict = storage.all()
+        found = False
         for key, value in objs_dict.items():
             if key.split(".")[1] == line.strip('"'):
                 print(value)
+                found = True
+        if not found:
+            print("** no instance found **")
 
     def do_destroy_id(self, line):
         """destroy an instance based on its ID: <class name>.show(<id>)"""
