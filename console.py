@@ -32,23 +32,24 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """modifies the input command"""
-        line_copy = line
-        l = line_copy.split(".")
-        if len(l) == 2:
-            if l[0] in self.class_map and l[1] == "all()":
-                return "all " + l[0]
-            elif l[0] in self.class_map and l[1] == "count()":
-                return "count " + l[0]
-            elif l[0] in self.class_map and l[1].split('("')[0] == "show":
-                id = l[1][5:-1]
+        l_list = line.split(".")
+        if len(l_list) == 2:
+            if l_list[0] in self.class_map and l_list[1] == "all()":
+                return "all " + l_list[0]
+            elif l_list[0] in self.class_map and l_list[1] == "count()":
+                return "count " + l_list[0]
+            elif l_list[0] in self.class_map and l_list[1].split(
+                    '("')[0] == "show":
+                id = l_list[1][5:-1]
                 return "show_id " + id
-            elif l[0] in self.class_map and l[1].split('("')[0] == "destroy":
-                id = l[1][8:-1]
+            elif l_list[0] in self.class_map and l_list[1].split(
+                    '("')[0] == "destroy":
+                id = l_list[1][8:-1]
                 return "destroy_id " + id
-            elif l[0] in self.class_map and l[1].split('("')[0] == "update":
-                args = l[1][7:-1].split(",")
-                """print("update " + l[0] + " " + " ".join(args)"""
-                return "update " + l[0] + " " + " ".join(args)
+            elif l_list[0] in self.class_map and l_list[1].split(
+                    '("')[0] == "update":
+                args = l_list[1][7:-1].split(",")
+                return "update " + l_list[0] + " " + " ".join(args)
         else:
             return line
 
@@ -175,6 +176,7 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
                 except KeyError:
                     print("** no instance found **")
+
     def do_count(self, line):
         """retrieve the number of instances
         of a class: <class name>.count()"""
@@ -208,6 +210,7 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
         else:
             print("** no instance found **")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
