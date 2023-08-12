@@ -1,8 +1,10 @@
 #!/usr/bin/python3
+"""Importing base_model module"""
 from models.base_model import BaseModel
 
 
 class Place(BaseModel):
+    """Place class representation"""
     city_id = ""
     user_id = ""
     name = ""

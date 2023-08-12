@@ -14,10 +14,13 @@ from models.review import Review
 
 
 class FileStorage:
+    """FileStorage class representation"""
+
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
+        """returns the dictionary __objects"""
         return self.__objects
 
     def new(self, obj):
@@ -35,7 +38,6 @@ class FileStorage:
 
         with open(self.__file_path, "w", encoding="UTF-8") as f:
             json.dump(obj_dict, f)
-            # f.write("\n")
 
     def reload(self):
         """

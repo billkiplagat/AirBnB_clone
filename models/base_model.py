@@ -1,10 +1,13 @@
 #!/usr/bin/python3
+"""Definition of BaseModel class"""
 from uuid import uuid4
 from datetime import datetime
 import models
 
 
 class BaseModel:
+    """BaseModel class representation"""
+
     def __init__(self, *args, **kwargs):
         """Public instance attributes initialization
         after creation
