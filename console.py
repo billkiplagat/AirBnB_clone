@@ -153,43 +153,6 @@ class HBNBCommand(cmd.Cmd):
                 except KeyError:
                     print("** no instance found **")
 
-    def default(self, arg):
-        """ overwrite defaults behaviour for commands cls.method() """
-
-        regex = re.match(r"(\w+\.\w+)(.*)", arg)
-        list_command_args = ["do_show", "do_destroy"]
-
-        """ to check if expression matches cls.method()
-            example: User.all() if yes default method would
-            be overriden accordingly """
-        if regex:
-            """ get class name and method to call from passed string
-                using match group and split function """
-            grp1 = regex.group(1)
-            grp1 = grp1.split(".")
-            cls_name = grp1[0]
-            method_name = grp1[1]
-            full_method_name = "do_" + method_name
-            method = getattr(self, full_method_name)
-            if full_method_name in ["do_all", "do_count"]:
-                method(cls_name)
-            elif full_method_name in list_command_args:
-                """ get id as it is needed for this list of commands
-                    if not passed only class name is passed """
-                regex1 = re.match(r'\(\"(.*)\"\)', regex.group(2))
-                if regex1:
-                    id = regex1.group(1)
-                    method(f"{cls_name} {id}")
-                else:
-                    method(f"{cls_name}")
-            elif full_method_name == "do_update":
-                regex1 = re.findall(r'[\w-]+', regex.group(2))
-                args = " ".join(regex1)
-                method(f"{cls_name} {args}")
-
-        else:
-            return super().default(arg)
-
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
