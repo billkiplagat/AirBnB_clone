@@ -18,6 +18,7 @@ class HBNBCommand(cmd.Cmd):
     """definition of class representing interpreter"""
 
     prompt = "(hbnb) "
+
     class_map = {
         "BaseModel": BaseModel,
         "User": User,
@@ -151,14 +152,11 @@ class HBNBCommand(cmd.Cmd):
                 except KeyError:
                     print("** no instance found **")
 
-
-# if __name__ == '__main__':
-#     HBNBCommand().cmdloop()
 if __name__ == '__main__':
-    mycmd = HBNBCommand()
-
     if not sys.stdin.isatty():
         for line in sys.stdin:
-            mycmd.onecmd(line.strip())
+            print(HBNBCommand().prompt)
+            HBNBCommand().onecmd(line.strip())
+            print(HBNBCommand().prompt)
     else:
-        mycmd.cmdloop()
+        HBNBCommand().cmdloop()
