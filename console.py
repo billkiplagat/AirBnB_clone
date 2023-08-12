@@ -30,6 +30,24 @@ class HBNBCommand(cmd.Cmd):
         "Review": Review
     }
 
+    def precmd(self, line):
+        """modifies the input command"""
+        line_copy = line
+        l = line_copy.split(".")
+        if len(l) == 2:
+            if l[0] in self.class_map and l[1] == "all()":
+                return "all " + l[0]
+            elif l[0] in self.class_map and l[1] == "count()":
+                return "count " + l[0]
+            elif l[0] in self.class_map and l[1].split('("')[0] == "show":
+                id = l[1][5:-1]
+                return "showid " + id
+            elif l[0] in self.class_map and l[1].split('("')[0] == "destroy":
+                id = l[1][8:-1]
+                return "destroy_id " + id
+        else:
+            return line
+
     def do_quit(self, line):
         """exit the program"""
         return True
@@ -152,7 +170,35 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
                 except KeyError:
                     print("** no instance found **")
+    def do_count(self, line):
+        """retrieve the number of instances
+        of a class: <class name>.count()"""
+        objs_dict = storage.all()
+        count = 0
+        for key in objs_dict.keys():
+            if key.split(".")[0] == line:
+                count += 1
+        print(count)
 
+    def do_showid(self, line):
+        """retrieve an instance based on its ID: <class name>.show(<id>)"""
+        objs_dict = storage.all()
+        for key, value in objs_dict.items():
+            if key.split(".")[1] == line.strip('"'):
+                print(value)
+
+    def do_destroy_id(self, line):
+        """destroy an instance based on its ID: <class name>.show(<id>)"""
+        objs_dict = storage.all()
+        found = False
+        for key in list(objs_dict.keys()):
+            if key.split(".")[1] == line.strip('"'):
+                del objs_dict[key]
+                found = True
+        if found:
+            storage.save()
+        else:
+            print("** no instance found **")
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
