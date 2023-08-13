@@ -171,21 +171,26 @@ class HBNBCommand(cmd.Cmd):
                     id = ".".join([args[0].strip('"'), args[1].strip('"')])
                     instance = objs_dict[id]
                     attr_name = (args[2]).strip('"')
+                    print(attr_name)
                     attr_value = args[3].strip('"')
-                    if hasattr(instance, attr_name):
+                    if hasattr(instance, str(attr_name)):
                         current_value = getattr(instance, attr_name)
                         attr_type = type(current_value)
                         try:
                             if attr_type == str:
                                 setattr(instance, attr_name, attr_value)
-                            elif attr_type == int:
+                            elif attr_type == int or attr_name == "age".strip('"'):
+                                print(attr_name)
                                 setattr(instance, attr_name, int(attr_value))
                             elif attr_type == float:
                                 setattr(instance, attr_name, float(attr_value))
                         except ValueError:
                             print("** invalid value for attribute **")
                     else:
-                        setattr(instance, attr_name, attr_value)
+                        if attr_name == "age":
+                            setattr(instance, attr_name, int(attr_value))
+                        else:
+                            setattr(instance, attr_name, attr_value)
                     storage.save()
                 except KeyError:
                     print("** no instance found **")
