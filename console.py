@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
                 return "destroy_id " + id
             elif l_list[0] in self.class_map and l_list[1].split(
                     '("')[0] == "update":
-                args = l_list[1][7:-2].split(", ")
+                args = l_list[1][7:-1].split(", ")
                 if "{" not in args[1]:
                     return "update " + l_list[0] + " " + " ".join(args)
                 else:
@@ -171,7 +171,6 @@ class HBNBCommand(cmd.Cmd):
                     id = ".".join([args[0].strip('"'), args[1].strip('"')])
                     instance = objs_dict[id]
                     attr_name = (args[2]).strip('"')
-                    print(attr_name)
                     attr_value = args[3].strip('"')
                     if hasattr(instance, str(attr_name)):
                         current_value = getattr(instance, attr_name)
@@ -179,7 +178,7 @@ class HBNBCommand(cmd.Cmd):
                         try:
                             if attr_type == str:
                                 setattr(instance, attr_name, attr_value)
-                            elif attr_type == int or attr_name == "age".strip('"'):
+                            elif attr_type == int:
                                 print(attr_name)
                                 setattr(instance, attr_name, int(attr_value))
                             elif attr_type == float:
@@ -187,10 +186,7 @@ class HBNBCommand(cmd.Cmd):
                         except ValueError:
                             print("** invalid value for attribute **")
                     else:
-                        if attr_name == "age":
-                            setattr(instance, attr_name, int(attr_value))
-                        else:
-                            setattr(instance, attr_name, attr_value)
+                        setattr(instance, attr_name, attr_value)
                     storage.save()
                 except KeyError:
                     print("** no instance found **")
