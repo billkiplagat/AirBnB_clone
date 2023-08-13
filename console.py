@@ -48,8 +48,21 @@ class HBNBCommand(cmd.Cmd):
                 return "destroy_id " + id
             elif l_list[0] in self.class_map and l_list[1].split(
                     '("')[0] == "update":
-                args = l_list[1][7:-1].split(",")
-                return "update " + l_list[0] + " " + " ".join(args)
+                args = l_list[1][7:-2].split(", ")
+                if "{" not in args[1]:
+                    return "update " + l_list[0] + " " + " ".join(args)
+                else:
+                    args = l_list[1][7:-2].split(", {")
+                    id = args[0].strip("'")
+                    attr_list = args[1].split(", ")
+                    first_attr = attr_list[0].split(": ")
+                    attr_one = [attr.strip("'") for attr in first_attr]
+                    second_attr = attr_list[1].split(": ")
+                    attr_two = [attr.strip("'") for attr in second_attr]
+                    result = " ".join(attr_one) + " " + " ".join(attr_two)
+                    return "update " + l_list[0] + " " + id + " " + result
+            else:
+                return line
         else:
             return line
 
@@ -210,6 +223,18 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
         else:
             print("** no instance found **")
+
+    def postcmd(self, stop, line):
+        """Execute after each command"""
+        if line.startswith("update"):
+            cmd_args = line.split()
+            if len(cmd_args) > 5 and cmd_args[1] in self.class_map:
+                cmd_args.pop(3)
+                cmd_args.pop(3)
+                cmd_args = [item.strip('"') for item in cmd_args]
+                update_cmd = " ".join(cmd_args)
+                self.onecmd(update_cmd)
+        return stop
 
 
 if __name__ == "__main__":
