@@ -119,18 +119,30 @@ class HBNBCommand(cmd.Cmd):
         id (save the change into the JSON file)"""
         if not line:
             print("** class name missing **")
+            return
         else:
             command = line.split()
             if command[0] not in self.class_map:
                 print("** class doesn't exist **")
-            elif command[0] in self.class_map and len(command) == 1:
+                return
+            elif len(command) == 1:
                 print("** instance id missing **")
-            try:
-                objs_dict = storage.all()
-                del objs_dict[".".join(command)]
+                return
+            # try:
+            #     objs_dict = storage.all()
+            #     del objs_dict[".".join(command)]
+            #     storage.save()
+            # except KeyError:
+            #     print("** instance id missing **")
+            class_name = command[0]
+            instance_id = command[1]
+            objs_dict = storage.all()
+            key_to_delete = f"{class_name}.{instance_id}"
+            if key_to_delete not in objs_dict:
+                print("** no instance found **")
+            else:
+                del objs_dict[key_to_delete]
                 storage.save()
-            except KeyError:
-                print("** instance id missing **")
 
     def do_all(self, line):
         """Prints all string representation of all
