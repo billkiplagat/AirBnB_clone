@@ -176,7 +176,11 @@ class HBNBCommand(cmd.Cmd):
                     id = ".".join([args[0].strip('"'), args[1].strip('"')])
                     instance = objs_dict[id]
                     attr_name = (args[2]).strip('"')
-                    attr_value = args[3].strip('"')
+                    if "age" in args[2]:
+                        attr_value = int(args[3].strip('"'))
+                        print(attr_value)
+                    else:
+                        attr_value = args[3].strip('"')
                     if hasattr(instance, str(attr_name)):
                         current_value = getattr(instance, attr_name)
                         attr_type = type(current_value)
