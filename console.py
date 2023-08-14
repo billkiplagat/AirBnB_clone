@@ -195,6 +195,7 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
                 except KeyError:
                     print("** no instance found **")
+                    return False
 
     def do_count(self, line):
         """retrieve the number of instances
