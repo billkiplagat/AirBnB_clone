@@ -37,7 +37,8 @@ class FileStorage:
             obj_dict[key] = obj.to_dict()
 
         with open(self.__file_path, "w", encoding="UTF-8") as f:
-            json.dump(obj_dict, f)
+            json.dump(obj_dict, f, indent=4)
+            f.write("\n")
 
     def reload(self):
         """
