@@ -178,7 +178,6 @@ class HBNBCommand(cmd.Cmd):
                     attr_name = (args[2]).strip('"')
                     if "age" in args[2]:
                         attr_value = int(args[3].strip('"'))
-                        print(attr_value)
                     else:
                         attr_value = args[3].strip('"')
                     if hasattr(instance, str(attr_name)):
@@ -186,9 +185,8 @@ class HBNBCommand(cmd.Cmd):
                         attr_type = type(current_value)
                         try:
                             if attr_type == str:
-                                setattr(instance, attr_name, attr_value)
+                                setattr(instance, attr_name, str(attr_value))
                             elif attr_type == int:
-                                print(attr_name)
                                 setattr(instance, attr_name, int(attr_value))
                             elif attr_type == float:
                                 setattr(instance, attr_name, float(attr_value))
@@ -199,7 +197,6 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
                 except KeyError:
                     print("** no instance found **")
-                    return False
 
     def do_count(self, line):
         """retrieve the number of instances
