@@ -105,8 +105,10 @@ class HBNBCommand(cmd.Cmd):
             command = line.split()
             if command[0] not in self.class_map:
                 print("** class doesn't exist **")
-            elif command[0] in self.class_map and len(command) == 1:
+                return
+            elif len(command) == 1:
                 print("** instance id missing **")
+                return
             try:
                 objs_dict = storage.all()
                 instance = objs_dict[".".join(command)]
@@ -128,12 +130,6 @@ class HBNBCommand(cmd.Cmd):
             elif len(command) == 1:
                 print("** instance id missing **")
                 return
-            # try:
-            #     objs_dict = storage.all()
-            #     del objs_dict[".".join(command)]
-            #     storage.save()
-            # except KeyError:
-            #     print("** instance id missing **")
             class_name = command[0]
             instance_id = command[1]
             objs_dict = storage.all()
@@ -201,7 +197,7 @@ class HBNBCommand(cmd.Cmd):
                         setattr(instance, attr_name, attr_value)
                     storage.save()
                 except KeyError:
-                    print("** no instance found **")
+                    print("** instance id missing **")
 
     def do_count(self, line):
         """retrieve the number of instances
