@@ -55,14 +55,12 @@ class HBNBCommand(cmd.Cmd):
                     args = l_list[1][7:-2].split(", {")
                     id = args[0].strip("'")
                     attr_list = args[1].split(", ")
-                    print(attr_list)
                     attr_list = [item.split(": ") for item in attr_list]
                     striped_attr_list = []
                     for attr in attr_list:
                         attr = [item.strip("'") for item in attr]
                         striped_attr_list += attr
                     result = " ".join(striped_attr_list)
-                    print(result)
                     return "update " + l_list[0] + " " + id + " " + result
             else:
                 return line
