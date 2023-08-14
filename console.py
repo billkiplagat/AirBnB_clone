@@ -112,7 +112,7 @@ class HBNBCommand(cmd.Cmd):
                 instance = objs_dict[".".join(command)]
                 print(instance)
             except KeyError:
-                print("** no instance found **")
+                print("** instance id missing **")
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and
@@ -130,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
                 del objs_dict[".".join(command)]
                 storage.save()
             except KeyError:
-                print("** no instance found **")
+                print("** instance id missing **")
 
     def do_all(self, line):
         """Prints all string representation of all
