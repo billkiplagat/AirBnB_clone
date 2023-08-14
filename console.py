@@ -101,20 +101,24 @@ class HBNBCommand(cmd.Cmd):
         an instance based on the class name and id"""
         if not line:
             print("** class name missing **")
+            return
+        command = line.split()
+        if command[0] not in self.class_map:
+            print("** class doesn't exist **")
+            return
+        elif len(command) == 1:
+            print("** instance id missing **")
+            return
+
+        class_name = command[0]
+        instance_id = command[1]
+        objs_dict = storage.all()
+        key_to_find = f"{class_name}.{instance_id}"
+        if key_to_find not in objs_dict:
+            print("** no instance found **")
         else:
-            command = line.split()
-            if command[0] not in self.class_map:
-                print("** class doesn't exist **")
-                return
-            elif len(command) == 1:
-                print("** instance id missing **")
-                return
-            try:
-                objs_dict = storage.all()
-                instance = objs_dict[".".join(command)]
-                print(instance)
-            except KeyError:
-                print("** instance id missing **")
+            instance = objs_dict[key_to_find]
+            print(instance)
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and
