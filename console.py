@@ -101,48 +101,40 @@ class HBNBCommand(cmd.Cmd):
         an instance based on the class name and id"""
         if not line:
             print("** class name missing **")
-            return
-        command = line.split()
-        if command[0] not in self.class_map:
-            print("** class doesn't exist **")
-            return
-        elif len(command) == 1:
-            print("** instance id missing **")
-            return
-
-        class_name = command[0]
-        instance_id = command[1]
-        objs_dict = storage.all()
-        key_to_find = f"{class_name}.{instance_id}"
-        if key_to_find not in objs_dict:
-            print("** no instance found **")
         else:
-            instance = objs_dict[key_to_find]
-            print(instance)
+            command = line.split()
+            if command[0] not in self.class_map:
+                print("** class doesn't exist **")
+                return False
+            elif command[0] in self.class_map and len(command) == 1:
+                print("** instance id missing **")
+                return False
+            try:
+                objs_dict = storage.all()
+                instance = objs_dict[".".join(command)]
+                print(instance)
+            except KeyError:
+                print("** no instance found **")
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and
         id (save the change into the JSON file)"""
         if not line:
             print("** class name missing **")
-            return
         else:
             command = line.split()
             if command[0] not in self.class_map:
                 print("** class doesn't exist **")
-                return
-            elif len(command) == 1:
+                return False
+            elif command[0] in self.class_map and len(command) == 1:
                 print("** instance id missing **")
-                return
-            class_name = command[0]
-            instance_id = command[1]
-            objs_dict = storage.all()
-            key_to_delete = f"{class_name}.{instance_id}"
-            if key_to_delete not in objs_dict:
-                print("** no instance found **")
-            else:
-                del objs_dict[key_to_delete]
+                return False
+            try:
+                objs_dict = storage.all()
+                del objs_dict[".".join(command)]
                 storage.save()
+            except KeyError:
+                print("** no instance found **")
 
     def do_all(self, line):
         """Prints all string representation of all
@@ -201,7 +193,7 @@ class HBNBCommand(cmd.Cmd):
                         setattr(instance, attr_name, attr_value)
                     storage.save()
                 except KeyError:
-                    print("** instance id missing **")
+                    print("** no instance found **")
 
     def do_count(self, line):
         """retrieve the number of instances
