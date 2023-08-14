@@ -105,8 +105,10 @@ class HBNBCommand(cmd.Cmd):
             command = line.split()
             if command[0] not in self.class_map:
                 print("** class doesn't exist **")
+                return False
             elif command[0] in self.class_map and len(command) == 1:
                 print("** instance id missing **")
+                return False
             try:
                 objs_dict = storage.all()
                 instance = objs_dict[".".join(command)]
@@ -123,8 +125,10 @@ class HBNBCommand(cmd.Cmd):
             command = line.split()
             if command[0] not in self.class_map:
                 print("** class doesn't exist **")
+                return False
             elif command[0] in self.class_map and len(command) == 1:
                 print("** instance id missing **")
+                return False
             try:
                 objs_dict = storage.all()
                 del objs_dict[".".join(command)]
