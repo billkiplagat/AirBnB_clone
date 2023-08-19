@@ -3,3 +3,4 @@ venv
 test_help
 cmd
 re
+web_static/w3c_validator.py
